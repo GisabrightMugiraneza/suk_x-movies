@@ -21,9 +21,30 @@ moviesDiv.innerHTML += `
 <img src="${poster}">
 <h3>${movie.title}</h3>
 <p>⭐ ${movie.vote_average}</p>
+<button onclick="watchTrailer(${movie.id})">Watch Trailer</button>
 </div>
 `;
+  sync function watchTrailer(movieId){
 
+let url = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
+
+let response = await fetch(url);
+let data = await response.json();
+
+let trailer = data.results.find(video => video.type === "Trailer");
+
+if(trailer){
+
+let youtubeUrl = `https://www.youtube.com/watch?v=${trailer.key}`;
+
+window.open(youtubeUrl);
+
+}else{
+
+alert("Trailer not available");
+}
+  }
 });
+
 
 }
