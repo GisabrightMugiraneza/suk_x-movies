@@ -17,6 +17,7 @@ padding:10px;
 width:300px;
 border:none;
 border-radius:5px;
+  margin-top:50px;
 }
 
 #movies{
@@ -63,4 +64,5 @@ flex-direction:column;
 #trailerVideo{
 width:70%;
 height:70%;
+
 }
