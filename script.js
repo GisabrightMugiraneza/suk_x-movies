@@ -25,7 +25,12 @@ moviesDiv.innerHTML += `
 </div>
 `;
 });
+  function playMovie(videoId) {
+  const player = document.getElementById("moviePlayer");
+  player.src = "https://www.youtube.com/embed/" + videoId;
+}
 
 
 }
+
 
