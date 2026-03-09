@@ -22,7 +22,7 @@ moviesDiv.innerHTML += `
 <h3>${movie.title}</h3>
 <p>⭐ ${movie.vote_average}</p>
 
-}
+
 </div>
 `;
 });
@@ -33,6 +33,7 @@ moviesDiv.innerHTML += `
 
 
 }
+
 
 
 
