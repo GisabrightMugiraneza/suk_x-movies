@@ -18,6 +18,32 @@
             min-height: 100vh;
         }
 
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,107,107,0.3);
+            border-radius: 50%;
+            border-top-color: #ff6b6b;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Navigation Bar */
         .navbar {
             display: flex;
@@ -36,6 +62,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
         }
 
         .logo img {
@@ -62,6 +89,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -255,6 +283,9 @@
         .movie-info h3 {
             font-size: 1rem;
             margin-bottom: 0.3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .movie-meta {
@@ -330,6 +361,7 @@
             color: #ff6b6b;
             text-decoration: none;
             font-weight: 500;
+            cursor: pointer;
         }
 
         /* Featured Trailer Section */
@@ -480,15 +512,15 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="logo">
+        <div class="logo" onclick="showHome()">
             <img src="https://via.placeholder.com/40x40/ff6b6b/ffffff?text=S" alt="Suk_x Movies">
             <span>Suk_x Movies</span>
         </div>
         <div class="nav-links">
-            <a href="#" onclick="showHome()">Home</a>
-            <a href="#">Movies</a>
-            <a href="#">TV Shows</a>
-            <a href="#">My List</a>
+            <a onclick="showHome()">Home</a>
+            <a onclick="loadMovies('popular')">Movies</a>
+            <a onclick="loadMovies('top_rated')">TV Shows</a>
+            <a onclick="loadMovies('upcoming')">My List</a>
         </div>
         <div class="user-menu">
             <i>🔔</i>
@@ -512,6 +544,9 @@
             <h2>Search Results</h2>
             <span class="results-count" id="resultsCount"></span>
         </div>
+        <div class="loading-spinner" id="searchSpinner">
+            <div class="spinner"></div>
+        </div>
         <div class="movie-grid" id="resultsGrid">
             <!-- Results will be dynamically inserted here -->
         </div>
@@ -521,98 +556,27 @@
     <section class="categories" id="categories">
         <h2>Browse by Category</h2>
         <div class="category-grid">
-            <div class="category-item" onclick="searchByCategory('trending')">🔥 Trending</div>
-            <div class="category-item" onclick="searchByCategory('action')">🎬 Action</div>
-            <div class="category-item" onclick="searchByCategory('comedy')">😂 Comedy</div>
-            <div class="category-item" onclick="searchByCategory('horror')">😱 Horror</div>
-            <div class="category-item" onclick="searchByCategory('romance')">💕 Romance</div>
-            <div class="category-item" onclick="searchByCategory('sci-fi')">🤖 Sci-Fi</div>
-            <div class="category-item" onclick="searchByCategory('tv series')">📺 TV Series</div>
+            <div class="category-item" onclick="searchByGenre(28)">🔥 Action</div>
+            <div class="category-item" onclick="searchByGenre(35)">😂 Comedy</div>
+            <div class="category-item" onclick="searchByGenre(27)">😱 Horror</div>
+            <div class="category-item" onclick="searchByGenre(10749)">💕 Romance</div>
+            <div class="category-item" onclick="searchByGenre(878)">🤖 Sci-Fi</div>
+            <div class="category-item" onclick="searchByGenre(18)">📺 Drama</div>
+            <div class="category-item" onclick="searchByGenre(53)">🔪 Thriller</div>
         </div>
     </section>
 
     <!-- Top Movie Trailers Section -->
     <section class="movie-section" id="topTrailers">
         <div class="section-header">
-            <h2>Top Movie Trailers</h2>
-            <a href="#" class="view-all">View All →</a>
+            <h2>Popular Movies</h2>
+            <a class="view-all" onclick="loadMovies('popular')">View All →</a>
         </div>
-        <div class="movie-grid">
-            <!-- Movie Card 1 -->
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=DUNE" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Play Trailer</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>Dune: Part Two</h3>
-                    <div class="movie-meta">
-                        <span>2024</span>
-                        <span class="rating">★ 4.8</span>
-                        <span>2h 46m</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Movie Card 2 -->
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=OPPENHEIMER" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Play Trailer</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>Oppenheimer</h3>
-                    <div class="movie-meta">
-                        <span>2023</span>
-                        <span class="rating">★ 4.9</span>
-                        <span>3h 0m</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Movie Card 3 -->
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=KILLER" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Play Trailer</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>The Killer</h3>
-                    <div class="movie-meta">
-                        <span>2023</span>
-                        <span class="rating">★ 4.5</span>
-                        <span>1h 58m</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Movie Card 4 -->
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=POOR+THINGS" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Play Trailer</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>Poor Things</h3>
-                    <div class="movie-meta">
-                        <span>2023</span>
-                        <span class="rating">★ 4.6</span>
-                        <span>2h 21m</span>
-                    </div>
-                </div>
-            </div>
+        <div class="loading-spinner" id="popularSpinner">
+            <div class="spinner"></div>
+        </div>
+        <div class="movie-grid" id="popularGrid">
+            <!-- Movies will be loaded here -->
         </div>
     </section>
 
@@ -628,8 +592,8 @@
                 </iframe>
             </div>
             <div class="trailer-info">
-                <h2>Featured: Dune: Part Two</h2>
-                <p>Experience the epic conclusion of the Dune saga. Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.</p>
+                <h2 id="featuredTitle">Featured: Dune: Part Two</h2>
+                <p id="featuredDescription">Experience the epic conclusion of the Dune saga. Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.</p>
                 <div class="trailer-actions">
                     <button class="btn-primary">Watch Now</button>
                     <button class="btn-secondary">+ Add to List</button>
@@ -638,69 +602,31 @@
         </div>
     </section>
 
-    <!-- Continue Watching Section -->
-    <section class="movie-section">
+    <!-- Top Rated Section -->
+    <section class="movie-section" id="topRated">
         <div class="section-header">
-            <h2>Continue Watching</h2>
-            <a href="#" class="view-all">View All →</a>
+            <h2>Top Rated</h2>
+            <a class="view-all" onclick="loadMovies('top_rated')">View All →</a>
         </div>
-        <div class="movie-grid">
-            <!-- Continue Watching Cards -->
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=INCEPTION" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Resume</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>Inception</h3>
-                    <div style="height: 3px; background: #ff6b6b; width: 75%; margin-top: 5px;"></div>
-                </div>
-            </div>
+        <div class="loading-spinner" id="topRatedSpinner">
+            <div class="spinner"></div>
+        </div>
+        <div class="movie-grid" id="topRatedGrid">
+            <!-- Movies will be loaded here -->
+        </div>
+    </section>
 
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=INTERSTELLAR" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Resume</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>Interstellar</h3>
-                    <div style="height: 3px; background: #ff6b6b; width: 45%; margin-top: 5px;"></div>
-                </div>
-            </div>
-
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=DARK+KNIGHT" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Resume</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>The Dark Knight</h3>
-                    <div style="height: 3px; background: #ff6b6b; width: 90%; margin-top: 5px;"></div>
-                </div>
-            </div>
-
-            <div class="movie-card">
-                <div class="movie-poster">
-                    <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=MATRIX" alt="Movie">
-                    <div class="movie-overlay">
-                        <div class="play-btn">▶</div>
-                        <span>Resume</span>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3>The Matrix</h3>
-                    <div style="height: 3px; background: #ff6b6b; width: 30%; margin-top: 5px;"></div>
-                </div>
-            </div>
+    <!-- Upcoming Section -->
+    <section class="movie-section" id="upcoming">
+        <div class="section-header">
+            <h2>Upcoming Releases</h2>
+            <a class="view-all" onclick="loadMovies('upcoming')">View All →</a>
+        </div>
+        <div class="loading-spinner" id="upcomingSpinner">
+            <div class="spinner"></div>
+        </div>
+        <div class="movie-grid" id="upcomingGrid">
+            <!-- Movies will be loaded here -->
         </div>
     </section>
 
@@ -715,17 +641,17 @@
             </div>
             <div class="footer-column">
                 <h3>Quick Links</h3>
-                <p>About Us</p>
-                <p>Movies</p>
-                <p>TV Shows</p>
-                <p>My List</p>
+                <p onclick="showHome()">Home</p>
+                <p onclick="loadMovies('popular')">Movies</p>
+                <p onclick="loadMovies('top_rated')">TV Shows</p>
+                <p onclick="loadMovies('upcoming')">My List</p>
             </div>
             <div class="footer-column">
                 <h3>Categories</h3>
-                <p>Action</p>
-                <p>Comedy</p>
-                <p>Drama</p>
-                <p>Horror</p>
+                <p onclick="searchByGenre(28)">Action</p>
+                <p onclick="searchByGenre(35)">Comedy</p>
+                <p onclick="searchByGenre(18)">Drama</p>
+                <p onclick="searchByGenre(27)">Horror</p>
             </div>
             <div class="footer-column">
                 <h3>Follow Us</h3>
@@ -736,248 +662,227 @@
             </div>
         </div>
         <div class="copyright">
-            © 2026 Suk_x Movies. All rights reserved. | Powered by sukmovies.rt.gd
+            © 2026 Suk_x Movies. All rights reserved. | Powered by TMDB
         </div>
     </footer>
 
     <script>
-        // Movie database with the titles from your image
-        const movieDatabase = [
-            {
-                title: "War Machine",
-                year: "2025",
-                rating: "4.5",
-                duration: "2h 15m",
-                category: "action",
-                poster: "WAR+MACHINE"
-            },
-            {
-                title: "Hellfire",
-                year: "2025",
-                rating: "4.7",
-                duration: "2h 5m",
-                category: "action",
-                poster: "HELLFIRE"
-            },
-            {
-                title: "Cold Storage",
-                year: "2024",
-                rating: "4.3",
-                duration: "1h 55m",
-                category: "thriller",
-                poster: "COLD+STORAGE"
-            },
-            {
-                title: "Mercy",
-                year: "2024",
-                rating: "4.4",
-                duration: "1h 50m",
-                category: "drama",
-                poster: "MERCY"
-            },
-            {
-                title: "28 Years Later: The",
-                year: "2025",
-                rating: "4.8",
-                duration: "2h 30m",
-                category: "horror",
-                poster: "28+YEARS+LATER"
-            },
-            {
-                title: "LANG",
-                year: "2024",
-                rating: "4.2",
-                duration: "1h 45m",
-                category: "action",
-                poster: "LANG"
-            },
-            {
-                title: "LUNDGREN",
-                year: "2024",
-                rating: "4.1",
-                duration: "1h 40m",
-                category: "action",
-                poster: "LUNDGREN"
-            },
-            {
-                title: "KETEL",
-                year: "2023",
-                rating: "4.0",
-                duration: "1h 55m",
-                category: "drama",
-                poster: "KETEL"
-            },
-            // Additional movies from your original list
-            {
-                title: "Dune: Part Two",
-                year: "2024",
-                rating: "4.8",
-                duration: "2h 46m",
-                category: "sci-fi",
-                poster: "DUNE"
-            },
-            {
-                title: "Oppenheimer",
-                year: "2023",
-                rating: "4.9",
-                duration: "3h 0m",
-                category: "drama",
-                poster: "OPPENHEIMER"
-            },
-            {
-                title: "The Killer",
-                year: "2023",
-                rating: "4.5",
-                duration: "1h 58m",
-                category: "action",
-                poster: "KILLER"
-            },
-            {
-                title: "Poor Things",
-                year: "2023",
-                rating: "4.6",
-                duration: "2h 21m",
-                category: "comedy",
-                poster: "POOR+THINGS"
-            },
-            {
-                title: "Inception",
-                year: "2010",
-                rating: "4.9",
-                duration: "2h 28m",
-                category: "sci-fi",
-                poster: "INCEPTION"
-            },
-            {
-                title: "Interstellar",
-                year: "2014",
-                rating: "4.9",
-                duration: "2h 49m",
-                category: "sci-fi",
-                poster: "INTERSTELLAR"
-            },
-            {
-                title: "The Dark Knight",
-                year: "2008",
-                rating: "5.0",
-                duration: "2h 32m",
-                category: "action",
-                poster: "DARK+KNIGHT"
-            },
-            {
-                title: "The Matrix",
-                year: "1999",
-                rating: "4.8",
-                duration: "2h 16m",
-                category: "sci-fi",
-                poster: "MATRIX"
-            }
-        ];
+        // ==================== TMDB CONFIGURATION ====================
+        // IMPORTANT: Replace with your actual TMDB API key
+        const API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // <-- PASTE YOUR API KEY HERE
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+        const BACKDROP_BASE_URL = 'https://image.tmdb.org/t/p/original';
 
-        // Function to create a movie card HTML
+        // ==================== HELPER FUNCTIONS ====================
+        function showSpinner(spinnerId) {
+            document.getElementById(spinnerId).classList.add('active');
+        }
+
+        function hideSpinner(spinnerId) {
+            document.getElementById(spinnerId).classList.remove('active');
+        }
+
+        // Create movie card HTML from TMDB data
         function createMovieCard(movie) {
+            const posterPath = movie.poster_path 
+                ? `${IMAGE_BASE_URL}${movie.poster_path}`
+                : 'https://via.placeholder.com/300x450/2a2f3f/ffffff?text=No+Poster';
+            
+            const year = movie.release_date ? movie.release_date.split('-')[0] : 'N/A';
+            const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
+            
             return `
-                <div class="movie-card">
+                <div class="movie-card" onclick="showMovieDetails(${movie.id})">
                     <div class="movie-poster">
-                        <img src="https://via.placeholder.com/300x450/2a2f3f/ffffff?text=${movie.poster}" alt="${movie.title}">
+                        <img src="${posterPath}" alt="${movie.title}">
                         <div class="movie-overlay">
                             <div class="play-btn">▶</div>
-                            <span>Play Trailer</span>
+                            <span>View Details</span>
                         </div>
                     </div>
                     <div class="movie-info">
                         <h3>${movie.title}</h3>
                         <div class="movie-meta">
-                            <span>${movie.year}</span>
-                            <span class="rating">★ ${movie.rating}</span>
-                            <span>${movie.duration}</span>
+                            <span>${year}</span>
+                            <span class="rating">★ ${rating}</span>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // Main search function
-        function searchMovies() {
+        // ==================== MAIN FUNCTIONS ====================
+
+        // Search movies by query
+        async function searchMovies() {
             const searchInput = document.getElementById('searchInput');
-            const query = searchInput.value.trim().toLowerCase();
+            const query = searchInput.value.trim();
             
             if (query === '') {
                 alert('Please enter a movie title to search');
                 return;
             }
 
-            // Filter movies based on search query
-            const results = movieDatabase.filter(movie => 
-                movie.title.toLowerCase().includes(query)
-            );
-
-            // Display results
-            displaySearchResults(results, query);
-        }
-
-        // Search by category
-        function searchByCategory(category) {
-            const results = movieDatabase.filter(movie => 
-                movie.category.toLowerCase() === category.toLowerCase()
-            );
-
-            displaySearchResults(results, category + ' movies');
-            
-            // Update search input to show category
-            document.getElementById('searchInput').value = category;
-        }
-
-        // Display search results
-        function displaySearchResults(results, searchTerm) {
+            // Show results section and spinner
             const resultsSection = document.getElementById('searchResults');
             const resultsGrid = document.getElementById('resultsGrid');
             const resultsCount = document.getElementById('resultsCount');
-
-            // Clear previous results
-            resultsGrid.innerHTML = '';
-
-            if (results.length === 0) {
-                resultsGrid.innerHTML = `<div class="no-results">No movies found matching "${searchTerm}"</div>`;
-                resultsCount.textContent = '0 results';
-            } else {
-                // Add each movie card to the grid
-                results.forEach(movie => {
-                    resultsGrid.innerHTML += createMovieCard(movie);
-                });
-                resultsCount.textContent = `${results.length} result${results.length > 1 ? 's' : ''}`;
-            }
-
-            // Show the results section
-            resultsSection.classList.add('active');
             
-            // Smooth scroll to results
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
+            resultsSection.classList.add('active');
+            resultsGrid.innerHTML = '';
+            showSpinner('searchSpinner');
+
+            try {
+                const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                hideSpinner('searchSpinner');
+
+                if (data.results.length === 0) {
+                    resultsGrid.innerHTML = `<div class="no-results">No movies found matching "${query}"</div>`;
+                    resultsCount.textContent = '0 results';
+                } else {
+                    data.results.forEach(movie => {
+                        resultsGrid.innerHTML += createMovieCard(movie);
+                    });
+                    resultsCount.textContent = `${data.results.length} result${data.results.length > 1 ? 's' : ''}`;
+                }
+
+                // Smooth scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Search error:', error);
+                hideSpinner('searchSpinner');
+                resultsGrid.innerHTML = `<div class="no-results">Error searching movies. Please try again.</div>`;
+            }
         }
 
-        // Show home (hide search results)
+        // Search by genre
+        async function searchByGenre(genreId) {
+            const resultsSection = document.getElementById('searchResults');
+            const resultsGrid = document.getElementById('resultsGrid');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            resultsSection.classList.add('active');
+            resultsGrid.innerHTML = '';
+            showSpinner('searchSpinner');
+
+            // Get genre name for display
+            const genreNames = {
+                28: 'Action', 35: 'Comedy', 27: 'Horror', 10749: 'Romance',
+                878: 'Sci-Fi', 18: 'Drama', 53: 'Thriller'
+            };
+            const genreName = genreNames[genreId] || 'Movies';
+
+            try {
+                const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
+                const data = await response.json();
+
+                hideSpinner('searchSpinner');
+
+                if (data.results.length === 0) {
+                    resultsGrid.innerHTML = `<div class="no-results">No ${genreName} movies found</div>`;
+                    resultsCount.textContent = '0 results';
+                } else {
+                    data.results.forEach(movie => {
+                        resultsGrid.innerHTML += createMovieCard(movie);
+                    });
+                    resultsCount.textContent = `${data.results.length} ${genreName} movies`;
+                }
+
+                document.getElementById('searchInput').value = genreName;
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Genre search error:', error);
+                hideSpinner('searchSpinner');
+                resultsGrid.innerHTML = `<div class="no-results">Error loading movies. Please try again.</div>`;
+            }
+        }
+
+        // Load movies by category (popular, top_rated, upcoming)
+        async function loadMovies(category) {
+            const gridId = category + 'Grid';
+            const spinnerId = category + 'Spinner';
+            
+            showSpinner(spinnerId);
+
+            try {
+                const response = await fetch(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`);
+                const data = await response.json();
+
+                hideSpinner(spinnerId);
+
+                const grid = document.getElementById(gridId);
+                grid.innerHTML = '';
+
+                // Show only first 8 movies in home sections
+                const moviesToShow = data.results.slice(0, 8);
+                moviesToShow.forEach(movie => {
+                    grid.innerHTML += createMovieCard(movie);
+                });
+
+            } catch (error) {
+                console.error(`Error loading ${category} movies:`, error);
+                hideSpinner(spinnerId);
+                document.getElementById(gridId).innerHTML = `<div class="no-results">Error loading movies</div>`;
+            }
+        }
+
+        // Show movie details (you can expand this)
+        function showMovieDetails(movieId) {
+            console.log('Show details for movie ID:', movieId);
+            // You can implement a modal or navigate to a details page
+            alert(`Movie ID: ${movieId} - Details page would open here`);
+        }
+
+        // Show home (hide search results, show all sections)
         function showHome() {
             const resultsSection = document.getElementById('searchResults');
             resultsSection.classList.remove('active');
             document.getElementById('searchInput').value = '';
             
-            // Scroll to top
+            // Refresh main sections
+            loadMovies('popular');
+            loadMovies('top_rated');
+            loadMovies('upcoming');
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Allow search on Enter key
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchMovies();
+        // Load featured movie (you can customize this)
+        async function loadFeaturedMovie() {
+            try {
+                const response = await fetch(`${BASE_URL}/movie/693134?api_key=${API_KEY}`); // Dune: Part Two ID
+                const movie = await response.json();
+                
+                document.getElementById('featuredTitle').textContent = movie.title;
+                document.getElementById('featuredDescription').textContent = movie.overview;
+                
+                // You could also update the trailer iframe here
+            } catch (error) {
+                console.error('Error loading featured movie:', error);
             }
-        });
+        }
 
-        // Initialize with some featured content
+        // Initialize on page load
         window.onload = function() {
-            // You can add any initialization code here
-            console.log('Suk_x Movies ready!');
+            // Load initial movies
+            loadMovies('popular');
+            loadMovies('top_rated');
+            loadMovies('upcoming');
+            loadFeaturedMovie();
+            
+            // Allow search on Enter key
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchMovies();
+                }
+            });
         };
-  <script src="script.js"></script>
+        <script src="script.js"></script>
     </script>
 </body>
 </html>
@@ -986,6 +891,7 @@
 
         
     
+
 
 
 
