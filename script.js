@@ -1,4 +1,4 @@
-const apiKey = "27d7234cc0a8643d0b6d28fa1a7517aa";
+const API_KEY = "27d7234cc0a8643d0b6d28fa1a7517aa";
 
 async function searchMovies() {
 
@@ -58,6 +58,7 @@ function displayResults(movies){
 
     section.classList.add("active");
 }
+
 
 
 
