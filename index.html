@@ -1,418 +1,179 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Suk_x Movies</title>
-<img src="images/ChatGPT Image May 11, 2026, 03_58_30 PM.png" alt="Logo" width="200">
-<style>
 
-body{
-margin:0;
-font-family:Arial;
-background:#141b2b;
-color:white;
-}
+<link rel="stylesheet" href="style.css">
 
-header{
-padding:20px;
-background:#0d1320;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-.logo{
-color:#ff6b6b;
-font-size:22px;
-font-weight:bold;
-}
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-.hero{
-text-align:center;
-padding:50px;
-}
-
-.search-container input{
-padding:12px;
-width:300px;
-border-radius:30px;
-border:none;
-}
-
-.search-container button{
-padding:12px 20px;
-border:none;
-background:#ff6b6b;
-color:white;
-border-radius:30px;
-cursor:pointer;
-}
-
-.section{
-padding:30px;
-}
-
-.row{
-display:flex;
-overflow-x:auto;
-gap:15px;
-scroll-behavior:smooth;
-}
-
-.row::-webkit-scrollbar{
-display:none;
-}
-
-.movie{
-min-width:180px;
-background:#1a2135;
-border-radius:10px;
-overflow:hidden;
-position:relative;
-cursor:pointer;
-transition:0.3s;
-}
-
-.movie:hover{
-transform:scale(1.1);
-}
-
-.movie img{
-width:100%;
-}
-
-.overlay{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
-opacity:0;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-transition:0.3s;
-}
-
-.movie:hover .overlay{
-opacity:1;
-}
-
-.info{
-padding:10px;
-font-size:14px;
-}
-
-.rating{
-color:gold;
-}
-
-.scrollBtn{
-background:#ff6b6b;
-border:none;
-color:white;
-padding:8px 15px;
-cursor:pointer;
-margin:10px;
-border-radius:5px;
-}
-
-#trailerModal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-display:none;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-}
-
-#trailerVideo{
-width:70%;
-height:70%;
-}
-
-</style>
 </head>
 
 <body>
 
 <header>
 
-<div class="logo">Suk_x Movies</div>
+<nav class="navbar">
+
+<div class="logo">
+<i class="fa-solid fa-film"></i>
+<span>Suk_x Movies</span>
+</div>
+
+<ul class="nav-links">
+<li><a href="#">Home</a></li>
+<li><a href="#">Movies</a></li>
+<li><a href="#">TV Shows</a></li>
+<li><a href="#">Anime</a></li>
+<li><a href="#">Trending</a></li>
+</ul>
+
+<div class="nav-icons">
+
+<i class="fa-solid fa-heart"></i>
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+</nav>
 
 </header>
 
 <section class="hero">
 
-<h1>Watch Movie Trailers</h1>
+<div class="overlay"></div>
 
-<div class="search-container">
+<div class="hero-content">
 
-<input id="searchInput" placeholder="Search movie">
+<h1 id="featuredTitle">
+Featured Movie
+</h1>
 
-<button onclick="searchMovies()">Search</button>
+<p id="featuredOverview">
+Loading featured movie...
+</p>
 
-</div>
+<div class="hero-buttons">
 
-</section>
+<button id="watchTrailer">
 
+<i class="fa-solid fa-play"></i>
 
-<section class="section">
+Watch Trailer
 
-<h2>Search Results</h2>
+</button>
 
-<div class="row" id="resultsRow"></div>
+<button id="moreInfo">
 
-</section>
+<i class="fa-solid fa-circle-info"></i>
 
+More Info
 
-<section class="section">
-
-<h2>Trending</h2>
-
-<button class="scrollBtn" onclick="scrollRow('trendingRow',-300)">◀</button>
-
-<button class="scrollBtn" onclick="scrollRow('trendingRow',300)">▶</button>
-
-<div class="row" id="trendingRow"></div>
-
-</section>
-
-
-<section class="section">
-
-<h2>Popular</h2>
-
-<button class="scrollBtn" onclick="scrollRow('popularRow',-300)">◀</button>
-
-<button class="scrollBtn" onclick="scrollRow('popularRow',300)">▶</button>
-
-<div class="row" id="popularRow"></div>
-
-</section>
-
-
-<section class="section">
-
-<h2>Top Rated</h2>
-
-<button class="scrollBtn" onclick="scrollRow('topRow',-300)">◀</button>
-
-<button class="scrollBtn" onclick="scrollRow('topRow',300)">▶</button>
-
-<div class="row" id="topRow"></div>
-
-</section>
-
-
-<section class="section">
-
-<h2>Upcoming</h2>
-
-<button class="scrollBtn" onclick="scrollRow('upcomingRow',-300)">◀</button>
-
-<button class="scrollBtn" onclick="scrollRow('upcomingRow',300)">▶</button>
-
-<div class="row" id="upcomingRow"></div>
-
-</section>
-
-
-<div id="trailerModal">
-
-<iframe id="trailerVideo" allowfullscreen></iframe>
-
-<button onclick="closeTrailer()">Close</button>
-
-</div>
-
-
-<script>
-
-const API_KEY="27d7234cc0a8643d0b6d28fa1a7517aa"
-
-const BASE="https://api.themoviedb.org/3"
-
-const IMG="https://image.tmdb.org/t/p/w500"
-
-
-function createMovie(movie){
-
-const poster=movie.poster_path
-? IMG+movie.poster_path
-: "https://via.placeholder.com/300x450"
-
-const year=movie.release_date
-? movie.release_date.split("-")[0]
-: "N/A"
-
-return `
-
-<div class="movie" onclick="playTrailer(${movie.id})">
-
-<img src="${poster}">
-
-<div class="overlay">▶</div>
-
-<div class="info">
-
-<b>${movie.title}</b><br>
-
-${year}
-
-<span class="rating">★ ${movie.vote_average}</span>
+</button>
 
 </div>
 
 </div>
 
-`
+</section>
 
-}
+<section class="search-section">
 
+<div class="search-box">
 
-async function loadMovies(type,rowId){
+<input
+type="text"
+id="searchInput"
+placeholder="Search Movies, TV Shows or Anime...">
 
-const res=await fetch(`${BASE}/movie/${type}?api_key=${API_KEY}`)
+<button id="searchBtn">
 
-const data=await res.json()
+<i class="fa-solid fa-magnifying-glass"></i>
 
-const row=document.getElementById(rowId)
+Search
 
-row.innerHTML=""
+</button>
 
-data.results.forEach(movie=>{
+</div>
 
-row.innerHTML+=createMovie(movie)
+</section>
 
-})
+<section>
 
-}
+<h2 class="section-title">
 
+🔥 Trending Movies
 
-async function loadTrending(){
+</h2>
 
-const res=await fetch(`${BASE}/trending/movie/day?api_key=${API_KEY}`)
+<div id="trendingMovies" class="movie-grid">
 
-const data=await res.json()
+</div>
 
-const row=document.getElementById("trendingRow")
+</section>
 
-row.innerHTML=""
+<section>
 
-data.results.forEach(movie=>{
+<h2 class="section-title">
 
-row.innerHTML+=createMovie(movie)
+⭐ Popular Movies
 
-})
+</h2>
 
-}
+<div id="popularMovies" class="movie-grid">
 
+</div>
 
-async function searchMovies(){
+</section>
 
-const query=document.getElementById("searchInput").value
+<section>
 
-if(query==="") return
+<h2 class="section-title">
 
-const res=await fetch(`${BASE}/search/movie?api_key=${API_KEY}&query=${query}`)
+🎌 Popular Anime
 
-const data=await res.json()
+</h2>
 
-const row=document.getElementById("resultsRow")
+<div id="animeMovies" class="movie-grid">
 
-row.innerHTML=""
+</div>
 
-data.results.forEach(movie=>{
+</section>
 
-row.innerHTML+=createMovie(movie)
+<section>
 
-})
+<h2 class="section-title">
 
-}
+🎥 Search Results
 
+</h2>
 
-document.getElementById("searchInput")
-.addEventListener("input",function(){
+<div id="searchResults" class="movie-grid">
 
-if(this.value.length>=3){
+</div>
 
-searchMovies()
+</section>
 
-}
+<div id="movieModal" class="modal">
 
-})
+<div class="modal-content">
 
+<span class="close">&times;</span>
 
-async function playTrailer(movieId){
+<div id="movieDetails"></div>
 
-const res=await fetch(`${BASE}/movie/${movieId}/videos?api_key=${API_KEY}`)
+</div>
 
-const data=await res.json()
+</div>
 
-const trailer=data.results.find(v=>v.type==="Trailer")
+<script src="script.js"></script>
 
-if(trailer){
-
-document.getElementById("trailerVideo").src=
-`https://www.youtube.com/embed/${trailer.key}`
-
-document.getElementById("trailerModal").style.display="flex"
-
-}else{
-
-alert("Trailer not available")
-
-}
-
-}
-
-
-function closeTrailer(){
-
-document.getElementById("trailerModal").style.display="none"
-
-document.getElementById("trailerVideo").src=""
-
-}
-
-
-function scrollRow(row,amount){
-
-document.getElementById(row).scrollBy({
-
-left:amount,
-behavior:"smooth"
-
-})
-
-}
-
-
-window.onload=function(){
-
-loadTrending()
-
-loadMovies("popular","popularRow")
-
-loadMovies("top_rated","topRow")
-
-loadMovies("upcoming","upcomingRow")
-
-}
-
-</script>
-     <script src="script.js"></script>
-  <div class="copyright">
-            © 2026 Suk_x Movies. All rights reserved. | Powered by GISA BRIGHT MUGIRANEZA
-        </div>
 </body>
 </html>
   
