@@ -1,204 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suk_x Movies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+    <title>Suk_x Movies</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Your existing CSS -->
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
 <body>
 
 <header>
+    <nav class="navbar">
 
-<nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-film"></i>
+            <span>Suk_x Movies</span>
+        </div>
 
-<div class="logo">
-<i class="fa-solid fa-film"></i>
-<span>Suk_x Movies</span>
-</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">TV Shows</a></li>
+            <li><a href="#">Anime</a></li>
+            <li><a href="#">Trending</a></li>
+        </ul>
 
-<ul class="nav-links">
-<li><a href="#">Home</a></li>
-<li><a href="#">Movies</a></li>
-<li><a href="#">TV Shows</a></li>
-<li><a href="#">Anime</a></li>
-<li><a href="#">Trending</a></li>
-</ul>
+        <div class="nav-icons">
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-user"></i>
+        </div>
 
-<div class="nav-icons">
-
-<i class="fa-solid fa-heart"></i>
-
-<i class="fa-solid fa-user"></i>
-
-</div>
-
-</nav>
-
+    </nav>
 </header>
 
-<section class="hero">
 
-<div class="overlay"></div>
+<!-- ================= HERO ================= -->
 
-<div class="hero-content">
+<section class="hero" id="hero">
 
-<h1 id="featuredTitle">
-Featured Movie
-</h1>
+    <div class="overlay"></div>
 
-<p id="featuredOverview">
-Loading featured movie...
-</p>
+    <div class="hero-content">
 
-<div class="hero-buttons">
+        <h1 id="featuredTitle">
+            Loading...
+        </h1>
 
-<button id="watchTrailer">
+        <p id="featuredOverview">
+            Loading featured movie...
+        </p>
 
-<i class="fa-solid fa-play"></i>
+        <div class="hero-buttons">
 
-Watch Trailer
+            <button id="watchTrailer">
+                <i class="fa-solid fa-play"></i>
+                Watch Trailer
+            </button>
 
-</button>
+            <button id="moreInfo">
+                <i class="fa-solid fa-circle-info"></i>
+                More Info
+            </button>
 
-<button id="moreInfo">
+        </div>
 
-<i class="fa-solid fa-circle-info"></i>
-
-More Info
-
-</button>
-
-</div>
-
-</div>
+    </div>
 
 </section>
+
+
+<!-- ================= SEARCH ================= -->
 
 <section class="search-section">
 
-<div class="search-box">
+    <div class="search-box">
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search Movies, TV Shows or Anime...">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search Movies, TV Shows or Anime..."
+        >
 
-<button id="searchBtn">
+        <button id="searchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Search
+        </button>
 
-<i class="fa-solid fa-magnifying-glass"></i>
-
-Search
-
-</button>
-
-</div>
+    </div>
 
 </section>
+
+
+<!-- ================= TRENDING ================= -->
 
 <section>
 
-<h2 class="section-title">
+    <h2 class="section-title">
+        🔥 Trending Movies
+    </h2>
 
-🔥 Trending Movies
-
-</h2>
-
-<div id="trendingMovies" class="movie-grid">
-
-</div>
+    <div id="trendingMovies" class="movie-grid"></div>
 
 </section>
+
+
+<!-- ================= POPULAR ================= -->
 
 <section>
 
-<h2 class="section-title">
+    <h2 class="section-title">
+        ⭐ Popular Movies
+    </h2>
 
-⭐ Popular Movies
-
-</h2>
-
-<div id="popularMovies" class="movie-grid">
-
-</div>
+    <div id="popularMovies" class="movie-grid"></div>
 
 </section>
+
+
+<!-- ================= ANIME ================= -->
 
 <section>
 
-<h2 class="section-title">
+    <h2 class="section-title">
+        🎌 Popular Anime
+    </h2>
 
-🎌 Popular Anime
-
-</h2>
-
-<div id="animeMovies" class="movie-grid">
-
-</div>
+    <div id="animeMovies" class="movie-grid"></div>
 
 </section>
+
+
+<!-- ================= SEARCH RESULTS ================= -->
 
 <section>
 
-<h2 class="section-title">
+    <h2 class="section-title">
+        🎥 Search Results
+    </h2>
 
-🎥 Search Results
-
-</h2>
-
-<div id="searchResults" class="movie-grid">
-
-</div>
+    <div id="searchResults" class="movie-grid"></div>
 
 </section>
+
+
+<!-- ================= MOVIE INFO MODAL ================= -->
 
 <div id="movieModal" class="modal">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<span class="close">&times;</span>
+        <span class="close">&times;</span>
 
-<div id="movieDetails"></div>
+        <div id="movieDetails"></div>
+
+    </div>
 
 </div>
 
+
+<!-- ================= YOUTUBE TRAILER MODAL ================= -->
+
+<div id="trailerModal" class="modal">
+
+    <div class="modal-content trailer-content">
+
+        <span id="closeTrailer" class="close">&times;</span>
+
+        <div id="trailerContainer"></div>
+
+    </div>
+
 </div>
+
 
 <script src="script.js"></script>
 
 </body>
 </html>
-  
-
-
-
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
