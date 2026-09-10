@@ -6,13 +6,10 @@
 
     <title>Suk_x Movies</title>
 
-    <!-- Your existing CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
@@ -20,6 +17,7 @@
 <body>
 
 <header>
+
     <nav class="navbar">
 
         <div class="logo">
@@ -28,19 +26,39 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Movies</a></li>
-            <li><a href="#">TV Shows</a></li>
-            <li><a href="#">Anime</a></li>
-            <li><a href="#">Trending</a></li>
+
+            <li>
+                <a href="#" id="homeLink">Home</a>
+            </li>
+
+            <li>
+                <a href="#" id="moviesLink">Movies</a>
+            </li>
+
+            <li>
+                <a href="#" id="tvLink">TV Shows</a>
+            </li>
+
+            <li>
+                <a href="#" id="animeLink">Anime</a>
+            </li>
+
+            <li>
+                <a href="#" id="trendingLink">Trending</a>
+            </li>
+
         </ul>
 
         <div class="nav-icons">
+
             <i class="fa-solid fa-heart"></i>
+
             <i class="fa-solid fa-user"></i>
+
         </div>
 
     </nav>
+
 </header>
 
 
@@ -92,91 +110,111 @@
         >
 
         <button id="searchBtn">
+
             <i class="fa-solid fa-magnifying-glass"></i>
+
             Search
+
         </button>
+
+    </div>
+
+
+    <!-- SEARCH RESULTS APPEAR DIRECTLY HERE -->
+
+    <div id="searchArea">
+
+        <h2 id="searchTitle" class="search-title">
+        </h2>
+
+        <div id="searchResults" class="movie-grid search-grid">
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- ================= TRENDING ================= -->
+<!-- ================= HOME CONTENT ================= -->
 
-<section>
-
-    <h2 class="section-title">
-        🔥 Trending Movies
-    </h2>
-
-    <div id="trendingMovies" class="movie-grid"></div>
-
-</section>
+<div id="homeContent">
 
 
-<!-- ================= POPULAR ================= -->
+    <!-- TRENDING -->
 
-<section>
+    <section id="trendingSection">
 
-    <h2 class="section-title">
-        ⭐ Popular Movies
-    </h2>
+        <h2 class="section-title">
+            🔥 Trending Movies
+        </h2>
 
-    <div id="popularMovies" class="movie-grid"></div>
+        <div id="trendingMovies" class="movie-grid">
+        </div>
 
-</section>
-
-
-<!-- ================= ANIME ================= -->
-
-<section>
-
-    <h2 class="section-title">
-        🎌 Popular Anime
-    </h2>
-
-    <div id="animeMovies" class="movie-grid"></div>
-
-</section>
+    </section>
 
 
-<!-- ================= SEARCH RESULTS ================= -->
+    <!-- POPULAR MOVIES -->
 
-<section>
+    <section id="popularSection">
 
-    <h2 class="section-title">
-        🎥 Search Results
-    </h2>
+        <h2 class="section-title">
+            ⭐ Popular Movies
+        </h2>
 
-    <div id="searchResults" class="movie-grid"></div>
+        <div id="popularMovies" class="movie-grid">
+        </div>
 
-</section>
+    </section>
 
 
-<!-- ================= MOVIE INFO MODAL ================= -->
+    <!-- POPULAR ANIME -->
+
+    <section id="animeSection">
+
+        <h2 class="section-title">
+            🎌 Popular Anime
+        </h2>
+
+        <div id="animeMovies" class="movie-grid">
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- ================= MOVIE / TV MODAL ================= -->
 
 <div id="movieModal" class="modal">
 
     <div class="modal-content">
 
-        <span class="close">&times;</span>
+        <span id="closeMovie" class="close">
+            &times;
+        </span>
 
-        <div id="movieDetails"></div>
+        <div id="movieDetails">
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- ================= YOUTUBE TRAILER MODAL ================= -->
+<!-- ================= TRAILER MODAL ================= -->
 
 <div id="trailerModal" class="modal">
 
     <div class="modal-content trailer-content">
 
-        <span id="closeTrailer" class="close">&times;</span>
+        <span id="closeTrailer" class="close">
+            &times;
+        </span>
 
-        <div id="trailerContainer"></div>
+        <div id="trailerContainer">
+        </div>
 
     </div>
 
